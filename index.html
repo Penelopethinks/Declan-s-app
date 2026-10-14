@@ -38,9 +38,25 @@ body{background-color:#e8f0e3;background-image:radial-gradient(ellipse at 20px 2
 <section class="page" id="watching"><div class="section-head"><div><h2 id="playerTitle">Now watching</h2><button class="smallbtn" data-goto="shows">← Back to library</button></div></div><div class="player"><div><div class="screen" id="animationStage"><canvas id="brickAnimation" aria-label="Animated brick basketball scene"></canvas><div class="animation-overlay"><span class="tag">BRICKBALL ORIGINAL ANIMATION</span><h2 id="screenTitle">The Big Tip-Off</h2><p id="screenDesc">A brick basketball matchup is about to begin.</p><button class="primary" id="playPause">▶ Play animated scene</button></div></div><div class="gameinfo"><span class="tag">Watch-only animated episode</span><button class="play" id="saveCurrent">☆ Save to watchlist</button></div><p class="notice">These are original, code-animated basketball scenes with moving brick-style players and a ball—not prerecorded studio cartoons. The story and matchup change for each show.</p><div class="panel" style="margin-top:12px"><h3>Game story</h3><p id="storyText">The arena lights flicker on as both teams take the court.</p></div></div><div class="panel"><h3>More episodes</h3><div class="episode-list" id="moreEpisodes"></div></div></div></section>
 <div class="footer">BrickBall TV • A fan-made, fictional brick basketball universe • Not affiliated with LEGO® or the NBA.</div>
 </main><div class="toast" id="toast" role="status"></div></div>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" onerror="this.onerror=function(){var n=document.createElement('div');n.style.cssText='position:fixed;z-index:999999;left:8px;right:8px;top:8px;padding:12px;background:#8b1e1e;color:white;border:2px solid white;border-radius:8px;font:14px sans-serif';n.textContent='BrickBall TV could not load its JavaScript compiler. Please connect to Wi-Fi and reload.';if(document.body)document.body.appendChild(n)};this.src='https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js'"></script>
 <script>
 /* ES5-era iOS Safari API fallbacks used by the game. */
+/* Compatibility and visible diagnostics for older iPhone Safari. */
+  window.addEventListener('error',function(e){
+    var message=e&&e.message?String(e.message):'An app script failed to start.';
+    var panel=document.getElementById('brickball-js-error');
+    if(!panel){panel=document.createElement('div');panel.id='brickball-js-error';panel.style.cssText='position:fixed;z-index:999998;left:8px;right:8px;top:8px;padding:12px;background:#8b1e1e;color:#fff;border:2px solid #fff;border-radius:8px;font:13px/1.4 sans-serif;overflow-wrap:break-word';if(document.body)document.body.appendChild(panel);}
+    if(panel){panel.textContent='BrickBall TV could not start: '+message+'. Reload the page; if this stays, share this message.';}
+  });
+  if(!Array.prototype.includes){Array.prototype.includes=function(value,start){var i=start||0;if(i<0)i=Math.max(0,this.length+i);for(;i<this.length;i++)if(this[i]===value||this[i]!==this[i]&&value!==value)return true;return false;};}
+  if(!String.prototype.includes){String.prototype.includes=function(value,start){return String(this).indexOf(value,start||0)!==-1;};}
+  if(window.NodeList&&!NodeList.prototype.forEach){NodeList.prototype.forEach=Array.prototype.forEach;}
+  if(window.HTMLCollection&&!HTMLCollection.prototype.forEach){HTMLCollection.prototype.forEach=Array.prototype.forEach;}
+  if(window.Element){
+    if(!Element.prototype.remove){Element.prototype.remove=function(){if(this.parentNode)this.parentNode.removeChild(this);};}
+    if(!Element.prototype.after){Element.prototype.after=function(node){if(!this.parentNode)return;if(this.nextSibling)this.parentNode.insertBefore(node,this.nextSibling);else this.parentNode.appendChild(node);};}
+    if(!Element.prototype.before){Element.prototype.before=function(node){if(this.parentNode)this.parentNode.insertBefore(node,this);};}
+  }
 (function(){
   if(!String.prototype.padStart){String.prototype.padStart=function(length,fill){var value=String(this),pad=fill===undefined?' ':String(fill);if(!pad)pad=' ';while(value.length<length)value=pad+value;return value.slice(value.length-length);};}
   if(!Object.fromEntries){Object.fromEntries=function(entries){var out={};for(var i=0;i<entries.length;i++){out[entries[i][0]]=entries[i][1];}return out;};}
